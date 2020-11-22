@@ -1,5 +1,8 @@
 name: Build LaTeX document with pdflatex
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - 'gh-action-result/pdflatex'
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -14,3 +17,14 @@ jobs:
         with:
           name: PDF
           path: notes-template.pdf
+      - name: Commit to orphan branch
+        run: |
+          git checkout --orphan gh-action-result/pdflatex
+          git rm -rf . .gitignore
+          git add notes-template.pdf
+          git -c user.name='GitHub Action' -c user.email='action@github.com' commit -m "Built paper"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-action-result/pdflatex

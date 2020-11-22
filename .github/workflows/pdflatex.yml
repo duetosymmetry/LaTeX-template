@@ -1,4 +1,4 @@
-name: Build LaTeX document and commit to orphaned branch
+name: LaTeX build
 on:
   push:
     branches-ignore:
@@ -24,3 +24,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-action-result/pdflatex
+          force: true

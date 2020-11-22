@@ -1,4 +1,4 @@
-name: Build LaTeX document with pdflatex
+name: Build LaTeX document and commit to orphaned branch
 on:
   push:
     branches-ignore:
@@ -16,7 +16,7 @@ jobs:
       - name: Commit to orphan branch
         run: |
           git checkout --orphan gh-action-result/pdflatex
-          git rm -rf . .gitignore
+          git rm -rf .
           git add notes-template.pdf
           git -c user.name='GitHub Action' -c user.email='action@github.com' commit -m "Built paper"
       - name: Push changes
